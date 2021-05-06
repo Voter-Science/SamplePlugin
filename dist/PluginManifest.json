@@ -1,0 +1,12 @@
+﻿{
+    "Id": "SamplePlugin",
+    "Name": "Sample plugin",
+    "Author": "Voter-Science",
+    "Website": "https://github.com/Voter-Science/SamplePlugin",
+    "Description": "",
+    "Version": "1.0.0",
+    "Tags": [
+        "search",
+        "_hidden"
+    ]
+}
