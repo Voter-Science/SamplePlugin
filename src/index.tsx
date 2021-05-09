@@ -17,6 +17,10 @@ import { Copy } from "trc-react/dist/common/Copy";
 import { Button } from "trc-react/dist/common/Button";
 import { PluginShell } from "trc-react/dist/PluginShell";
 import { SimpleTable } from "trc-react/dist/SimpleTable";
+import { ColumnSelector } from "trc-react/dist/ColumnSelector";
+import { FieldInputs } from "trc-react/dist/FieldInputs";
+import { ListColumns } from "trc-react/dist/ListColumns";
+import { PluginLink } from "trc-react/dist/PluginLink";
 
 interface IState {
   modal: boolean;
@@ -59,18 +63,12 @@ export class App extends React.Component<{}, IState> {
 
           <DescriptionList
             entries={[
-              [
-                "First entry title",
-                "Description list first entry description",
-              ],
+              ["First entry title", "Description list first entry description"],
               [
                 "Second entry title",
                 "Description list second entry description",
               ],
-              [
-                "Third entry title",
-                "Description list third entry description",
-              ],
+              ["Third entry title", "Description list third entry description"],
             ]}
           />
 
@@ -132,9 +130,7 @@ export class App extends React.Component<{}, IState> {
           <Copy>
             <h2>Spinner</h2>
           </Copy>
-          {this.state.loading2 && (
-            <Spinning />
-          )}
+          {this.state.loading2 && <Spinning />}
           <Button
             onClick={() => {
               this.setState({ loading2: true });
@@ -163,6 +159,32 @@ export class App extends React.Component<{}, IState> {
             <>Section 2</>
             <>Section 3</>
           </AccordionPanel>
+        </Panel>
+
+        <Panel>
+          <Copy>
+            <h2>ColumnSelector component</h2>
+          </Copy>
+          <ColumnSelector OnChange={(column) => alert(column)} />
+
+          <Copy>
+            <h2>FiledInputs component</h2>
+          </Copy>
+          <FieldInputs
+            data={this.context._contents}
+            Keys={["FirstName", "LastName", "Gender"]}
+            Names={["CustomName1", "CustomName2", "CustomName3"]}
+          />
+
+          <Copy>
+            <h2>ListColumns component</h2>
+          </Copy>
+          <ListColumns Include={() => true} />
+
+          <Copy>
+            <h2>PluginLink component</h2>
+          </Copy>
+          <PluginLink id="query" />
         </Panel>
       </PluginShell>
     );
