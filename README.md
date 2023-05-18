@@ -193,7 +193,7 @@ If you followed all the steps, your folder structure should look like this:
 
 Running the plugin is now as simple as running `npm install` followed by `npm run start`.
 
-If you run into errors, check your version of typescript by running `tsc --version` and run `npm i typescript@<version>`
+If you run into errors, check your version of typescript by running `tsc --version` and run `npm i typescript@<version>`, eg `npm i typescript@5.0.4`
 
 If everything went smoothly, you should be able to access the plugin at http://localhost:3000/index.html:
 
