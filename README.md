@@ -8,11 +8,18 @@ Plugins are built using NodeJs / Npm / TypeScript, and React. They run as Single
 The sample has bootstrapping code to handle authentication. 
 
 ### Prerequisites
-You will need Node / NPM (https://nodejs.org/en/download). 
 
-You can get trial data for a Voter Science account at https://start.voter-science.com/, which you can then use in your plugin. 
+1. You can get trial data for a Voter Science account at https://start.voter-science.com/, which you can then use in your plugin. 
 
-You will need WebPackage installed globally. You can see global packages by `npm list -g --depth 0` from your repo root. 
+2. You will need Node / NPM (https://nodejs.org/en/download). 
+
+3. You will need WebPack installed globally. You can see installed global packages by `npm list -g --depth 0` from your repo root. 
+
+```
+npm install -g webpack
+npm install -g webpack-cli
+```
+
 The other packages, including TypeScript, are downloaded via the npm package dev dependencies. 
 
 ### TL;DR - running a plugin
@@ -23,7 +30,7 @@ You should be able to:
 4. npm run start 
 5. Open `http://localhost:3000/index.html` in a browser.  
 
-
+This will then prompt you for login, let you select a sheet that from your account, and then run the sample plugin against that sheet. 
 
 However, for the sake of clarity, let’s walk through all the parts that make up the basic skeleton of a Voter Science plugin.
 
