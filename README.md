@@ -2,9 +2,37 @@
 
 ## Basic Plugin Setup
 
-Creating a plugin is as easy as copying another one, removing the parts you don’t need and moving from there.
+Creating a plugin is as easy as copying another one, removing the parts you don’t need and moving from there. 
+
+Plugins are built using NodeJs / Npm / TypeScript, and React. They run as Single Page Applications in the browser and talk to existnig  APIs. 
+The sample has bootstrapping code to handle authentication. 
+
+### Prerequisites
+You will need Node / NPM (https://nodejs.org/en/download). 
+
+You can get trial data for a Voter Science account at https://start.voter-science.com/, which you can then use in your plugin. 
+
+You will need WebPackage installed globally. You can see global packages by `npm list -g --depth 0` from your repo root. 
+The other packages, including TypeScript, are downloaded via the npm package dev dependencies. 
+
+### TL;DR - running a plugin
+You should be able to:
+1. Clone this sample plugin
+2. npm install
+3. npm run build
+4. npm run start 
+5. Open `http://localhost:3000/index.html` in a browser.  
+
+
 
 However, for the sake of clarity, let’s walk through all the parts that make up the basic skeleton of a Voter Science plugin.
+
+### Trouble shooting 
+
+For any trouble shooting, you can see a successful build for this plugin on the CI at https://ci.appveyor.com/project/VoterScience/sampleplugin. 
+
+You can also run `npm list -g --depth 0` to see which npm packages are installed globally. 
+
 
 ## package.json
 
@@ -31,6 +59,7 @@ However, for the sake of clarity, let’s walk through all the parts that make u
     "trc-sheet": "^1.12.0"
   },
   "devDependencies": {
+    "@types/node": "^7.0.7",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "awesome-typescript-loader": "^5.2.1",
@@ -194,6 +223,7 @@ If you followed all the steps, your folder structure should look like this:
 Running the plugin is now as simple as running `npm install` followed by `npm run start`.
 
 If everything went smoothly, you should be able to access the plugin at http://localhost:3000/index.html:
+(please note you must have this exact url, including the `index.html` suffix)
 
 ![Screenshot 1](./images/screenshot1.png)
 
