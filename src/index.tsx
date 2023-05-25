@@ -26,6 +26,11 @@ interface IState {
   modal: boolean;
   loading: boolean;
   loading2: boolean;
+
+  // Controls (like <TextInput> or <SelectInput>) should subscribe to OnChange and use that to 
+  // update state with control's current value. 
+  textValue: string;
+  optionValue: string;
 }
 
 export class App extends React.Component<{}, IState> {
@@ -38,13 +43,31 @@ export class App extends React.Component<{}, IState> {
       modal: false,
       loading: false,
       loading2: false,
+      textValue: "",
+      optionValue: ""
     };
 
+    // All control handlers need to call .bind(). 
     this.onRowClick = this.onRowClick.bind(this);
+    this.onSelectChange = this.onSelectChange.bind(this);
+    this.onTextChange = this.onTextChange.bind(this);
   }
 
   private onRowClick(key: string) {
     alert(key);
+  }
+
+  // callbacks for controls.
+  private onTextChange(
+    value: string
+  ): void {    
+    this.setState({textValue :value});
+  }
+
+  private onSelectChange(
+    value: string
+  ): void {
+    this.setState({optionValue: value});
   }
 
   render() {
@@ -95,12 +118,18 @@ export class App extends React.Component<{}, IState> {
           <TextInput
             label="A text input example"
             placeholder="Type something..."
+            onChange={(e) => this.onTextChange(e.target.value)}
+            error={this.state.textValue.length < 3 ? "Must be at least 3 chars" : null}
           />
+          <p>Text state: {this.state.textValue}</p>
           <SelectInput
             noBlank
             label="A select input example"
             options={["option1", "option2", "option3"]}
+            values={["value1", "value2", "value3"]}
+            onChange={(e)=>this.onSelectChange(e.target.value)}
           />
+          <p>Option state: {this.state.optionValue}</p>
 
           <Copy>
             <h2>Modal</h2>
