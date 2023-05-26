@@ -21,6 +21,8 @@ import { ColumnSelector } from "trc-react/dist/ColumnSelector";
 import { FieldInputs } from "trc-react/dist/FieldInputs";
 import { ListColumns } from "trc-react/dist/ListColumns";
 import { PluginLink } from "trc-react/dist/PluginLink";
+import { ToolTip } from "./ToolTip";
+import { TimeAgo } from "./timeago";
 
 interface IState {
   modal: boolean;
@@ -80,7 +82,11 @@ export class App extends React.Component<{}, IState> {
               Lorem ipsum dolor, sit amet consectetur adipisicing elit.
               Veritatis corporis voluptate libero ipsum aperiam, optio
               distinctio laborum ullam soluta laudantium delectus maxime,
-              molestias vel dolores sapiente! Alias, magni? Voluptatem, ut!
+              <ToolTip tooltipText="Total number of unique households (depuded by address/household id)" />
+              molestias vel 
+              <ToolTip tooltipText="Total number of unique households (depuded by address/household id)" />
+              dolores sapiente! Alias, magni? Voluptatem, ut!
+              Last Updated: <TimeAgo timeStr={"Wed, 22 Dec 2022 07:00:00 GMT"}/>
             </p>
           </Copy>
 
