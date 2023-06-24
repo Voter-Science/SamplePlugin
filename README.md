@@ -316,3 +316,25 @@ ReactDOM.render(
   document.getElementById("app")
 );
 ```
+
+
+# Icons
+
+Use Material Icons for geric icons. 
+https://fonts.google.com/icons
+
+
+Add to index.html: 
+```
+ <link
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet"
+  />
+```
+
+Reference via class name. 
+```
+  <i className="material-icons"
+    onClick={ ... }>
+    person_add_alt_1</i>
+```

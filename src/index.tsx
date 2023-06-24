@@ -11,6 +11,9 @@ import { TextInput } from "trc-react/dist/common/TextInput";
 import { SelectInput } from "trc-react/dist/common/SelectInput";
 import { FullPageLoadingMessage } from "trc-react/dist/common/FullPageLoadingMessage";
 import { Spinning } from "trc-react/dist/common/Spinning";
+import { SpinnerSmall }  from "trc-react/dist/common/SpinnerSmall";
+import { EmailTextInput } from "trc-react/dist/common/EmailTextInput";
+import { ToolTip } from "trc-react/dist/common/ToolTip";
 import Modal from "trc-react/dist/common/Modal";
 import { TabsPanel } from "trc-react/dist/common/TabsPanel";
 import { Copy } from "trc-react/dist/common/Copy";
@@ -21,6 +24,9 @@ import { ColumnSelector } from "trc-react/dist/ColumnSelector";
 import { FieldInputs } from "trc-react/dist/FieldInputs";
 import { ListColumns } from "trc-react/dist/ListColumns";
 import { PluginLink } from "trc-react/dist/PluginLink";
+import { SheetSelector } from "trc-react/dist/SheetSelector";
+
+import { TableBorders } from "./TableBorders";
 
 interface IState {
   modal: boolean;
@@ -31,7 +37,9 @@ interface IState {
   // update state with control's current value. 
   textValue: string;
   optionValue: string;
+  email: string; 
 }
+
 
 export class App extends React.Component<{}, IState> {
   static contextType = TRCContext;
@@ -44,7 +52,8 @@ export class App extends React.Component<{}, IState> {
       loading: false,
       loading2: false,
       textValue: "",
-      optionValue: ""
+      optionValue: "",
+      email:""
     };
 
     // All control handlers need to call .bind(). 
@@ -82,6 +91,7 @@ export class App extends React.Component<{}, IState> {
               distinctio laborum ullam soluta laudantium delectus maxime,
               molestias vel dolores sapiente! Alias, magni? Voluptatem, ut!
             </p>
+            <p>Some info <ToolTip tooltipText="Some extra information"/>. More information here <ToolTip tooltipText="Another tip" />.  </p>
           </Copy>
 
           <DescriptionList
@@ -115,21 +125,83 @@ export class App extends React.Component<{}, IState> {
           <Copy>
             <h2>Inputs</h2>
           </Copy>
-          <TextInput
-            label="A text input example"
-            placeholder="Type something..."
-            onChange={(e) => this.onTextChange(e.target.value)}
-            error={this.state.textValue.length < 3 ? "Must be at least 3 chars" : null}
-          />
-          <p>Text state: {this.state.textValue}</p>
-          <SelectInput
+
+        <TableBorders>
+            <table>
+              <thead>
+                <tr>
+                  <td>Name</td><td>Example</td><td>state</td>
+                </tr>
+              </thead>
+              <tr>
+                <td>Text input</td>
+                <td style={{border: '1px solid black'}}>
+                    <TextInput
+                      label="A text input example"
+                      placeholder="Type something..."
+                      onChange={(e) => this.onTextChange(e.target.value)}
+                      error={this.state.textValue.length < 3 ? "Must be at least 3 chars" : null}
+                    />
+                </td>
+                <td>
+                  Text state: {this.state.textValue}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Dropdown
+                </td>
+                <td>
+                <SelectInput
             noBlank
             label="A select input example"
             options={["option1", "option2", "option3"]}
             values={["value1", "value2", "value3"]}
             onChange={(e)=>this.onSelectChange(e.target.value)}
           />
-          <p>Option state: {this.state.optionValue}</p>
+                </td>
+                <td>
+                <p>{this.state.optionValue}</p>
+                </td>
+              </tr>
+
+              <tr>
+                <td> 
+                Email input - validates                 
+                </td>
+                <td>
+                  <EmailTextInput label="Enter your email" onChange={ (newEmail : string) =>this.setState( {email: newEmail})} />
+                </td>
+                <td>
+                  <p>Email Value: {this.state.email}</p>                  
+                </td>
+              </tr>
+              <tr>
+                <td>
+                Select sheet from those you have permission to:
+                </td>
+                <td>
+  
+                <SheetSelector
+            onSelect={(sheetId) => alert("Added sheet: " + sheetId)}
+            dialogTitle="Select sheet to add to this sheetlist"
+            openButtonText="Add Sheet+"
+            onlyTopLevel={true} // only include top-level sheets
+            onInclude={(sheetId, sheetName) => true} // additional filtering 
+          /> 
+                </td>
+                <td>
+
+                </td>
+              </tr>
+
+
+            </table>
+        </TableBorders>
+
+        
+        
+
 
           <Copy>
             <h2>Modal</h2>
@@ -153,21 +225,25 @@ export class App extends React.Component<{}, IState> {
               setTimeout(() => this.setState({ loading: false }), 2000);
             }}
           >
-            Trigger loader
+            Trigger loader (full screen)
           </Button>
 
           <Copy>
             <h2>Spinner</h2>
           </Copy>
           {this.state.loading2 && <Spinning />}
-          <Button
+          <p>Full screen: <Button
             onClick={() => {
               this.setState({ loading2: true });
               setTimeout(() => this.setState({ loading2: false }), 2000);
             }}
           >
             Trigger spinner
-          </Button>
+          </Button></p>
+
+          <p>Small spinner (for a single div):</p>
+          <SpinnerSmall css={undefined} />
+
         </Panel>
 
         <Panel>
@@ -197,7 +273,7 @@ export class App extends React.Component<{}, IState> {
           <ColumnSelector OnChange={(column) => alert(column)} />
 
           <Copy>
-            <h2>FiledInputs component</h2>
+            <h2>FieldInputs component</h2>
           </Copy>
           <FieldInputs
             data={this.context._contents}
