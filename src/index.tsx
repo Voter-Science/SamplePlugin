@@ -11,7 +11,7 @@ import { TextInput } from "trc-react/dist/common/TextInput";
 import { SelectInput } from "trc-react/dist/common/SelectInput";
 import { FullPageLoadingMessage } from "trc-react/dist/common/FullPageLoadingMessage";
 import { Spinning } from "trc-react/dist/common/Spinning";
-import { SpinnerSmall }  from "trc-react/dist/common/SpinnerSmall";
+import { SpinnerSmall } from "trc-react/dist/common/SpinnerSmall";
 import { EmailTextInput } from "trc-react/dist/common/EmailTextInput";
 import { ToolTip } from "trc-react/dist/common/ToolTip";
 import Modal from "trc-react/dist/common/Modal";
@@ -25,6 +25,7 @@ import { FieldInputs } from "trc-react/dist/FieldInputs";
 import { ListColumns } from "trc-react/dist/ListColumns";
 import { PluginLink } from "trc-react/dist/PluginLink";
 import { SheetSelector } from "trc-react/dist/SheetSelector";
+import { SurveyComponent } from "trc-react/dist/SurveySelector";
 
 import { TableBorders } from "./TableBorders";
 
@@ -33,13 +34,12 @@ interface IState {
   loading: boolean;
   loading2: boolean;
 
-  // Controls (like <TextInput> or <SelectInput>) should subscribe to OnChange and use that to 
-  // update state with control's current value. 
+  // Controls (like <TextInput> or <SelectInput>) should subscribe to OnChange and use that to
+  // update state with control's current value.
   textValue: string;
   optionValue: string;
-  email: string; 
+  email: string;
 }
-
 
 export class App extends React.Component<{}, IState> {
   static contextType = TRCContext;
@@ -53,10 +53,10 @@ export class App extends React.Component<{}, IState> {
       loading2: false,
       textValue: "",
       optionValue: "",
-      email:""
+      email: "",
     };
 
-    // All control handlers need to call .bind(). 
+    // All control handlers need to call .bind().
     this.onRowClick = this.onRowClick.bind(this);
     this.onSelectChange = this.onSelectChange.bind(this);
     this.onTextChange = this.onTextChange.bind(this);
@@ -67,16 +67,12 @@ export class App extends React.Component<{}, IState> {
   }
 
   // callbacks for controls.
-  private onTextChange(
-    value: string
-  ): void {    
-    this.setState({textValue :value});
+  private onTextChange(value: string): void {
+    this.setState({ textValue: value });
   }
 
-  private onSelectChange(
-    value: string
-  ): void {
-    this.setState({optionValue: value});
+  private onSelectChange(value: string): void {
+    this.setState({ optionValue: value });
   }
 
   render() {
@@ -91,7 +87,10 @@ export class App extends React.Component<{}, IState> {
               distinctio laborum ullam soluta laudantium delectus maxime,
               molestias vel dolores sapiente! Alias, magni? Voluptatem, ut!
             </p>
-            <p>Some info <ToolTip tooltipText="Some extra information"/>. More information here <ToolTip tooltipText="Another tip" />.  </p>
+            <p>
+              Some info <ToolTip tooltipText="Some extra information" />. More
+              information here <ToolTip tooltipText="Another tip" />.{" "}
+            </p>
           </Copy>
 
           <DescriptionList
@@ -126,82 +125,87 @@ export class App extends React.Component<{}, IState> {
             <h2>Inputs</h2>
           </Copy>
 
-        <TableBorders>
+          <TableBorders>
             <table>
               <thead>
                 <tr>
-                  <td>Name</td><td>Example</td><td>state</td>
+                  <td>Name</td>
+                  <td>Example</td>
+                  <td>state</td>
                 </tr>
               </thead>
               <tr>
                 <td>Text input</td>
-                <td style={{border: '1px solid black'}}>
-                    <TextInput
-                      label="A text input example"
-                      placeholder="Type something..."
-                      onChange={(e) => this.onTextChange(e.target.value)}
-                      error={this.state.textValue.length < 3 ? "Must be at least 3 chars" : null}
-                    />
+                <td style={{ border: "1px solid black" }}>
+                  <TextInput
+                    label="A text input example"
+                    placeholder="Type something..."
+                    onChange={(e) => this.onTextChange(e.target.value)}
+                    error={
+                      this.state.textValue.length < 3
+                        ? "Must be at least 3 chars"
+                        : null
+                    }
+                  />
+                </td>
+                <td>Text state: {this.state.textValue}</td>
+              </tr>
+              <tr>
+                <td>Dropdown</td>
+                <td>
+                  <SelectInput
+                    noBlank
+                    label="A select input example"
+                    options={["option1", "option2", "option3"]}
+                    values={["value1", "value2", "value3"]}
+                    onChange={(e) => this.onSelectChange(e.target.value)}
+                  />
                 </td>
                 <td>
-                  Text state: {this.state.textValue}
+                  <p>{this.state.optionValue}</p>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Email input - validates</td>
+                <td>
+                  <EmailTextInput
+                    label="Enter your email"
+                    onChange={(newEmail: string) =>
+                      this.setState({ email: newEmail })
+                    }
+                  />
+                </td>
+                <td>
+                  <p>Email Value: {this.state.email}</p>
                 </td>
               </tr>
               <tr>
+                <td>Select sheet from those you have permission to:</td>
                 <td>
-                  Dropdown
+                  <SheetSelector
+                    onSelect={(sheetId) => alert("Added sheet: " + sheetId)}
+                    dialogTitle="Select sheet to add to this sheetlist"
+                    openButtonText="Add Sheet+"
+                    onlyTopLevel={true} // only include top-level sheets
+                    onInclude={(sheetId, sheetName) => true} // additional filtering
+                  />
                 </td>
-                <td>
-                <SelectInput
-            noBlank
-            label="A select input example"
-            options={["option1", "option2", "option3"]}
-            values={["value1", "value2", "value3"]}
-            onChange={(e)=>this.onSelectChange(e.target.value)}
-          />
-                </td>
-                <td>
-                <p>{this.state.optionValue}</p>
-                </td>
-              </tr>
-
-              <tr>
-                <td> 
-                Email input - validates                 
-                </td>
-                <td>
-                  <EmailTextInput label="Enter your email" onChange={ (newEmail : string) =>this.setState( {email: newEmail})} />
-                </td>
-                <td>
-                  <p>Email Value: {this.state.email}</p>                  
-                </td>
+                <td></td>
               </tr>
               <tr>
+                <td>Survey</td>
                 <td>
-                Select sheet from those you have permission to:
-                </td>
-                <td>
-  
-                <SheetSelector
-            onSelect={(sheetId) => alert("Added sheet: " + sheetId)}
-            dialogTitle="Select sheet to add to this sheetlist"
-            openButtonText="Add Sheet+"
-            onlyTopLevel={true} // only include top-level sheets
-            onInclude={(sheetId, sheetName) => true} // additional filtering 
-          /> 
-                </td>
-                <td>
-
+                  <SurveyComponent
+                    onSelect={(surveyId: string) =>
+                      alert("Added survey: " + surveyId)
+                    }
+                    includeBlank={true}
+                  />
                 </td>
               </tr>
-
-
             </table>
-        </TableBorders>
-
-        
-        
-
+          </TableBorders>
 
           <Copy>
             <h2>Modal</h2>
@@ -232,18 +236,20 @@ export class App extends React.Component<{}, IState> {
             <h2>Spinner</h2>
           </Copy>
           {this.state.loading2 && <Spinning />}
-          <p>Full screen: <Button
-            onClick={() => {
-              this.setState({ loading2: true });
-              setTimeout(() => this.setState({ loading2: false }), 2000);
-            }}
-          >
-            Trigger spinner
-          </Button></p>
+          <p>
+            Full screen:{" "}
+            <Button
+              onClick={() => {
+                this.setState({ loading2: true });
+                setTimeout(() => this.setState({ loading2: false }), 2000);
+              }}
+            >
+              Trigger spinner
+            </Button>
+          </p>
 
           <p>Small spinner (for a single div):</p>
-          <SpinnerSmall css={undefined} />
-
+          <SpinnerSmall />
         </Panel>
 
         <Panel>
