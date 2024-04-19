@@ -25,6 +25,7 @@ import { FieldInputs } from "trc-react/dist/FieldInputs";
 import { ListColumns } from "trc-react/dist/ListColumns";
 import { PluginLink } from "trc-react/dist/PluginLink";
 import { SheetSelector } from "trc-react/dist/SheetSelector";
+import { SurveyComponent } from "trc-react/dist/SurveySelector";
 
 import { TableBorders } from "./TableBorders";
 
@@ -191,6 +192,17 @@ export class App extends React.Component<{}, IState> {
                   />
                 </td>
                 <td></td>
+              </tr>
+              <tr>
+                <td>Survey</td>
+                <td>
+                  <SurveyComponent
+                    onSelect={(surveyId: string) =>
+                      alert("Added survey: " + surveyId)
+                    }
+                    includeBlank={true}
+                  />
+                </td>
               </tr>
             </table>
           </TableBorders>
