@@ -11,8 +11,7 @@ install:
   # Install webpack verssions that are consistent with nodejs version on line 3. 
   - ps: Install-Product node $env:nodejs_version
   # install modules
-  - npm install -g webpack@4.30.0
-  - npm install -g webpack-cli@3.3.1
+  # Webpack is now part of package.json. 
   - npm install
 
 # Post-install test scripts.
