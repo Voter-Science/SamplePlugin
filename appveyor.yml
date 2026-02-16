@@ -1,6 +1,6 @@
 # Test against the latest version of this Node.js version
 environment:
-  nodejs_version: "12"
+  nodejs_version: "20"
 
 cache:
   - '%APPDATA%\npm-cache'               # npm cache
@@ -11,8 +11,7 @@ install:
   # Install webpack verssions that are consistent with nodejs version on line 3. 
   - ps: Install-Product node $env:nodejs_version
   # install modules
-  - npm install -g webpack@4.30.0
-  - npm install -g webpack-cli@3.3.1
+  # Webpack is now part of package.json. 
   - npm install
 
 # Post-install test scripts.
